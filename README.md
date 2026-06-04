@@ -221,3 +221,9 @@ Detailed evaluation metrics, ranking analysis, and validation statistics.
 - 💡 Explainable candidate recommendations
 - 💻 Fully CPU-based execution
 - 🔒 No external API dependencies
+
+---
+👨‍💻 Author
+Aaditya Sattawan
+---
+GitHub: https://github.com/Tiku57
