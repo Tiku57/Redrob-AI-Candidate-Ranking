@@ -146,11 +146,19 @@ pip install -r requirements.txt
 
 ## ▶️ Usage
 
-Run the ranking pipeline:
+The Streamlit application is a lightweight demonstration dashboard that visualizes the final ranking outputs and evaluation metrics.
+
+```bash
+streamlit run app.py
+```
+This will launch a local web dashboard allowing you to inspect the final `submission.csv` and read the `evaluation_report.md`.
+
+To run the full ranking pipeline over a local candidate dataset:
 
 ```bash
 python rank.py
 ```
+*(Note: Large dataset files like `candidates.jsonl.gz` are excluded from this repository).*
 
 The pipeline will:
 
