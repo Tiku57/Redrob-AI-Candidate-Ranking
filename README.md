@@ -1,32 +1,34 @@
-# Redrob AI Candidate Ranking
+# 🚀 Redrob AI Candidate Ranking
 
 An AI-powered candidate ranking system designed to identify the most relevant candidates for a given Job Description (JD). The solution combines lexical retrieval, semantic search, reranking, skill validation, and profile quality checks to generate explainable candidate shortlists at scale.
 
 ---
 
-## Problem Statement
+## 🎯 Problem Statement
 
-Traditional Applicant Tracking Systems (ATS) rely heavily on keyword matching, often overlooking qualified candidates and rewarding keyword stuffing. This project addresses that challenge by combining semantic understanding, evidence-based skill validation, experience alignment, and profile consistency checks to produce more reliable candidate rankings.
+Traditional Applicant Tracking Systems (ATS) rely heavily on keyword matching, often overlooking qualified candidates and rewarding keyword stuffing.
 
----
-
-## Key Features
-
-- Dynamic Job Description parsing
-- Multi-stage candidate retrieval and ranking
-- Semantic matching using transformer models
-- Skill evidence validation
-- Experience-fit scoring
-- Profile consistency and quality checks
-- Near-duplicate candidate handling
-- Explainable ranking decisions
-- CPU-only execution with no external API dependencies
+This project addresses that challenge by combining semantic understanding, evidence-based skill validation, experience alignment, and profile consistency checks to produce more reliable candidate rankings.
 
 ---
 
-## Architecture Overview
+## ✨ Key Features
 
-The system processes candidate profiles through a three-stage ranking pipeline:
+- 📄 Dynamic Job Description parsing
+- 🔍 Multi-stage candidate retrieval and ranking
+- 🤖 Semantic matching using transformer models
+- ✅ Skill evidence validation
+- 📈 Experience-fit scoring
+- 🛡️ Profile consistency and quality checks
+- 👥 Near-duplicate candidate handling
+- 💡 Explainable ranking decisions
+- ⚡ CPU-only execution with no external API dependencies
+
+---
+
+## 🏗️ Architecture Overview
+
+The system processes candidate profiles through a three-stage ranking pipeline.
 
 ### Stage 1: Lexical Retrieval
 
@@ -40,7 +42,7 @@ A Bi-Encoder (`all-MiniLM-L6-v2`) computes dense embeddings and ranks candidates
 
 A Cross-Encoder (`ms-marco-MiniLM-L-6-v2`) performs deeper relevance assessment on the top candidates to improve ranking quality.
 
-### Validation & Quality Layer
+### 🔎 Validation & Quality Layer
 
 Additional ranking signals include:
 
@@ -53,34 +55,35 @@ Additional ranking signals include:
 
 ---
 
-## Ranking Pipeline
+## 🔄 Ranking Pipeline
 
 ```text
 Job Description
        │
        ▼
-JD Parser
+   JD Parser
        │
        ▼
-TF-IDF Retrieval
-(100K → 2K)
+ TF-IDF Retrieval
+   (100K → 2K)
        │
        ▼
 Bi-Encoder Ranking
-(2K → 500)
+    (2K → 500)
        │
        ▼
-Cross-Encoder Reranking
+Cross-Encoder
+  Reranking
        │
        ▼
-Validation Engines
+Validation Layer
 • Skill Evidence
 • Experience Fit
 • Consistency Checks
 • Quality Validation
        │
        ▼
-Final Ranking
+  Final Ranking
        │
        ▼
 Top 100 Candidates
@@ -88,7 +91,7 @@ Top 100 Candidates
 
 ---
 
-## Project Structure
+## 📂 Project Structure
 
 ```text
 Redrob-AI-Candidate-Ranking/
@@ -111,7 +114,7 @@ Redrob-AI-Candidate-Ranking/
 
 ---
 
-## Installation
+## ⚙️ Installation
 
 ### Clone Repository
 
@@ -141,7 +144,7 @@ pip install -r requirements.txt
 
 ---
 
-## Usage
+## ▶️ Usage
 
 Run the ranking pipeline:
 
@@ -166,25 +169,25 @@ evaluation_report.md
 
 ---
 
-## Results
+## 📊 Results
 
 ### Performance
 
-- Processes 100,000 candidate profiles
-- End-to-end runtime: ~31.5 seconds
-- CPU-only execution
-- Memory usage below 16 GB
+- ⚡ Processes 100,000 candidate profiles
+- ⏱️ End-to-end runtime: ~31.5 seconds
+- 💻 CPU-only execution
+- 🧠 Memory usage below 16 GB
 
 ### Ranking Quality
 
-- Experience-fit integrated into ranking
-- Skill evidence validation included
-- Profile quality checks applied
-- Duplicate candidate penalties used to improve ranking diversity
+- ✅ Experience-fit integrated into ranking
+- ✅ Skill evidence validation included
+- ✅ Profile quality checks applied
+- ✅ Duplicate candidate penalties improve ranking diversity
 
 ---
 
-## Technology Stack
+## 🛠️ Technology Stack
 
 | Component | Technology |
 |------------|------------|
@@ -198,27 +201,23 @@ evaluation_report.md
 
 ---
 
-## Outputs
+## 📁 Outputs
 
-### submission.csv
+### 📄 submission.csv
 
 Final ranked candidate shortlist.
 
-### evaluation_report.md
+### 📈 evaluation_report.md
 
 Detailed evaluation metrics, ranking analysis, and validation statistics.
 
 ---
 
-## Future Improvements
+## 🏆 Hackathon Highlights
 
-- Approximate Nearest Neighbor (ANN) retrieval for larger datasets
-- Enhanced skill extraction and normalization
-- Company and domain-specific relevance scoring
-- Improved duplicate detection using embedding similarity
-
----
-
-## License
-
-This project was developed as part of the Redrob AI Candidate Ranking Challenge.
+- 🚀 Ranked 100,000 candidate profiles
+- ⚡ Completed ranking in ~31.5 seconds
+- 🤖 Multi-stage AI-powered retrieval pipeline
+- 💡 Explainable candidate recommendations
+- 💻 Fully CPU-based execution
+- 🔒 No external API dependencies
