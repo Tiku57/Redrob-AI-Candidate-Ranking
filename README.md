@@ -1,58 +1,224 @@
 # Redrob AI Candidate Ranking
 
-An AI-powered candidate ranking engine built for recruiter-quality hiring. This project dynamically parses unstructured Job Descriptions (JDs), evaluates candidates holistically using multi-stage semantic retrieval, and produces highly accurate, recruiter-trusted shortlists at scale.
+An AI-powered candidate ranking system designed to identify the most relevant candidates for a given Job Description (JD). The solution combines lexical retrieval, semantic search, reranking, skill validation, and profile quality checks to generate explainable candidate shortlists at scale.
+
+---
 
 ## Problem Statement
-Recruiters often rely on keyword-based Applicant Tracking Systems (ATS) that miss highly qualified candidates, reward superficial keyword stuffing, and fail to holistically evaluate true capability. This engine solves that by combining deep semantic understanding, evidence validation, consistency scoring, behavioral signals, and diversity-aware ranking into a cohesive evaluation formula.
+
+Traditional Applicant Tracking Systems (ATS) rely heavily on keyword matching, often overlooking qualified candidates and rewarding keyword stuffing. This project addresses that challenge by combining semantic understanding, evidence-based skill validation, experience alignment, and profile consistency checks to produce more reliable candidate rankings.
+
+---
+
+## Key Features
+
+- Dynamic Job Description parsing
+- Multi-stage candidate retrieval and ranking
+- Semantic matching using transformer models
+- Skill evidence validation
+- Experience-fit scoring
+- Profile consistency and quality checks
+- Near-duplicate candidate handling
+- Explainable ranking decisions
+- CPU-only execution with no external API dependencies
+
+---
 
 ## Architecture Overview
-The pipeline processes 100,000 JSONL candidates locally on the CPU in under **35 seconds**. It is built with zero external API dependencies to ensure privacy, deterministic results, and strict hardware compliance.
 
-### The Pipeline
-1. **Lexical Retrieval (Stage 1):** Scikit-Learn TF-IDF rapidly filters 100k records down to a highly relevant 2,000-candidate pool.
-2. **Dense Retrieval (Stage 2):** HuggingFace `all-MiniLM-L6-v2` Bi-Encoder maps profiles into dense vector space, isolating the top 500 semantic matches.
-3. **Deep Reranking (Stage 3):** `ms-marco-MiniLM-L-6-v2` Cross-Encoder performs deep token-level relevance assessment on the finalists.
-4. **Validation Engines:** 
-   - **Evidence Scoring:** Checks claimed advanced skills against proximate action verbs in candidate history.
-   - **Consistency Engine:** Filters mathematically impossible career timelines (Quality Risk).
-5. **Diversity Engine:** Suppresses near-duplicate profiles via dynamic penalties.
+The system processes candidate profiles through a three-stage ranking pipeline:
+
+### Stage 1: Lexical Retrieval
+
+TF-IDF retrieval rapidly filters the candidate pool and selects the most relevant profiles.
+
+### Stage 2: Semantic Retrieval
+
+A Bi-Encoder (`all-MiniLM-L6-v2`) computes dense embeddings and ranks candidates based on semantic similarity to the JD.
+
+### Stage 3: Cross-Encoder Reranking
+
+A Cross-Encoder (`ms-marco-MiniLM-L-6-v2`) performs deeper relevance assessment on the top candidates to improve ranking quality.
+
+### Validation & Quality Layer
+
+Additional ranking signals include:
+
+- Experience alignment
+- Skill match scoring
+- Evidence validation
+- Profile consistency checks
+- Behavioral signals
+- Duplicate profile penalties
+
+---
+
+## Ranking Pipeline
+
+```text
+Job Description
+       │
+       ▼
+JD Parser
+       │
+       ▼
+TF-IDF Retrieval
+(100K → 2K)
+       │
+       ▼
+Bi-Encoder Ranking
+(2K → 500)
+       │
+       ▼
+Cross-Encoder Reranking
+       │
+       ▼
+Validation Engines
+• Skill Evidence
+• Experience Fit
+• Consistency Checks
+• Quality Validation
+       │
+       ▼
+Final Ranking
+       │
+       ▼
+Top 100 Candidates
+```
+
+---
+
+## Project Structure
+
+```text
+Redrob-AI-Candidate-Ranking/
+├── app.py
+├── rank.py
+├── parser.py
+├── jd_parser.py
+├── scorer.py
+├── skill_engine.py
+├── consistency_engine.py
+├── diversity_engine.py
+├── evaluator.py
+├── feature_extractor.py
+├── job_description.md
+├── submission.csv
+├── evaluation_report.md
+├── requirements.txt
+└── README.md
+```
+
+---
 
 ## Installation
 
-Ensure you have Python 3.10+ installed.
+### Clone Repository
 
 ```bash
-# Clone the repository
 git clone https://github.com/Tiku57/Redrob-AI-Candidate-Ranking.git
 cd Redrob-AI-Candidate-Ranking
+```
 
-# Create a virtual environment
+### Create Virtual Environment
+
+```bash
 python -m venv venv
-source venv/bin/activate  # On Windows use `venv\Scripts\activate`
+source venv/bin/activate
+```
 
-# Install requirements
+Windows:
+
+```bash
+venv\Scripts\activate
+```
+
+### Install Dependencies
+
+```bash
 pip install -r requirements.txt
 ```
 
-## Usage Instructions
+---
 
-To run the full ranking pipeline over your candidate dataset:
+## Usage
+
+Run the ranking pipeline:
 
 ```bash
 python rank.py
 ```
-This command parses `job_description.md` and evaluates all candidates inside `candidates.jsonl.gz`. 
-It will generate two artifacts:
-- `submission.csv`: The finalized rank-ordered list of candidates with recruiter reasoning.
-- `evaluation_report.md`: A comprehensive breakdown of system variance, quality risk metrics, and validation checks.
 
-## Results & Performance
-- **Speed:** End-to-end runtime of ~31.5 seconds on a standard CPU.
-- **Constraints:** Requires <16GB RAM. Completely local execution.
-- **Quality:** 100% of the Top-20 candidates strictly meet the 5-9 YOE requirements. Near-duplicate synthetic profiles are completely suppressed.
+The pipeline will:
+
+1. Parse the Job Description
+2. Load candidate profiles
+3. Compute ranking scores
+4. Generate explanations
+5. Produce final outputs
+
+Generated files:
+
+```text
+submission.csv
+evaluation_report.md
+```
+
+---
+
+## Results
+
+### Performance
+
+- Processes 100,000 candidate profiles
+- End-to-end runtime: ~31.5 seconds
+- CPU-only execution
+- Memory usage below 16 GB
+
+### Ranking Quality
+
+- Experience-fit integrated into ranking
+- Skill evidence validation included
+- Profile quality checks applied
+- Duplicate candidate penalties used to improve ranking diversity
+
+---
 
 ## Technology Stack
-- **Python** 
-- **Polars & NumPy:** Ultra-fast, memory-efficient columnar and matrix operations.
-- **Scikit-Learn:** Optimized sparse vectorization (TF-IDF).
-- **Sentence Transformers:** Local inference for Dense Encoders.
+
+| Component | Technology |
+|------------|------------|
+| Programming Language | Python |
+| Data Processing | Polars, NumPy |
+| Retrieval | Scikit-Learn (TF-IDF) |
+| Semantic Search | Sentence Transformers |
+| Reranking | Cross-Encoder (MS MARCO MiniLM) |
+| Interface | Streamlit |
+| Version Control | Git & GitHub |
+
+---
+
+## Outputs
+
+### submission.csv
+
+Final ranked candidate shortlist.
+
+### evaluation_report.md
+
+Detailed evaluation metrics, ranking analysis, and validation statistics.
+
+---
+
+## Future Improvements
+
+- Approximate Nearest Neighbor (ANN) retrieval for larger datasets
+- Enhanced skill extraction and normalization
+- Company and domain-specific relevance scoring
+- Improved duplicate detection using embedding similarity
+
+---
+
+## License
+
+This project was developed as part of the Redrob AI Candidate Ranking Challenge.
