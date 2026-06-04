@@ -1,0 +1,5 @@
+polars
+scikit-learn
+sentence-transformers
+streamlit
+numpy
