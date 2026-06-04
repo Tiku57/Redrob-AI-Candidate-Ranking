@@ -1,6 +1,13 @@
-# 🚀 Redrob AI Candidate Ranking
+# 🚀 Redrob AI Candidate Ranking Engine
 
-An AI-powered candidate ranking system designed to identify the most relevant candidates for a given Job Description (JD). The solution combines lexical retrieval, semantic search, reranking, skill validation, and profile quality checks to generate explainable candidate shortlists at scale.
+An AI-powered candidate ranking system designed to identify the most relevant candidates for a given Job Description (JD). The solution combines lexical retrieval, semantic search, reranking, skill validation, profile quality checks, and explainable scoring to generate high-quality candidate shortlists at scale.
+
+---
+
+![Python](https://img.shields.io/badge/Python-3.11-blue)
+![Runtime](https://img.shields.io/badge/Runtime-31.2s-success)
+![Candidates](https://img.shields.io/badge/Candidates-100K-orange)
+![Compute](https://img.shields.io/badge/CPU%20Only-✓-green)
 
 ---
 
@@ -20,7 +27,7 @@ This project addresses that challenge by combining semantic understanding, evide
 - ✅ Skill evidence validation
 - 📈 Experience-fit scoring
 - 🛡️ Profile consistency and quality checks
-- 👥 Near-duplicate candidate handling
+- 👥 Near-duplicate profile handling
 - 💡 Explainable ranking decisions
 - ⚡ CPU-only execution with no external API dependencies
 
@@ -36,7 +43,7 @@ TF-IDF retrieval rapidly filters the candidate pool and selects the most relevan
 
 ### Stage 2: Semantic Retrieval
 
-A Bi-Encoder (`all-MiniLM-L6-v2`) computes dense embeddings and ranks candidates based on semantic similarity to the JD.
+A Bi-Encoder (`all-MiniLM-L6-v2`) computes dense embeddings and ranks candidates based on semantic similarity to the Job Description.
 
 ### Stage 3: Cross-Encoder Reranking
 
@@ -105,6 +112,8 @@ Redrob-AI-Candidate-Ranking/
 ├── diversity_engine.py
 ├── evaluator.py
 ├── feature_extractor.py
+├── honeypot_detector.py
+├── disqualifier.py
 ├── job_description.md
 ├── submission.csv
 ├── evaluation_report.md
@@ -146,34 +155,37 @@ pip install -r requirements.txt
 
 ## ▶️ Usage
 
-The Streamlit application is a lightweight demonstration dashboard that visualizes the final ranking outputs and evaluation metrics.
+### Launch Dashboard
+
+The Streamlit application serves as a lightweight dashboard for viewing ranking outputs and evaluation metrics.
 
 ```bash
 streamlit run app.py
 ```
-This will launch a local web dashboard allowing you to inspect the final `submission.csv` and read the `evaluation_report.md`.
 
-To run the full ranking pipeline over a local candidate dataset:
+### Run Full Ranking Pipeline
 
 ```bash
 python rank.py
 ```
-*(Note: Large dataset files like `candidates.jsonl.gz` are excluded from this repository).*
 
-The pipeline will:
+The pipeline:
 
-1. Parse the Job Description
-2. Load candidate profiles
-3. Compute ranking scores
-4. Generate explanations
-5. Produce final outputs
+1. Parses the Job Description
+2. Loads candidate profiles
+3. Computes ranking scores
+4. Applies validation checks
+5. Generates explanations
+6. Produces final outputs
 
-Generated files:
+Generated artifacts:
 
 ```text
 submission.csv
 evaluation_report.md
 ```
+
+> Note: Large candidate datasets are excluded from the repository due to size constraints.
 
 ---
 
@@ -182,7 +194,7 @@ evaluation_report.md
 ### Performance
 
 - ⚡ Processes 100,000 candidate profiles
-- ⏱️ End-to-end runtime: ~31.5 seconds
+- ⏱️ End-to-end runtime: ~31.2 seconds
 - 💻 CPU-only execution
 - 🧠 Memory usage below 16 GB
 
@@ -191,7 +203,8 @@ evaluation_report.md
 - ✅ Experience-fit integrated into ranking
 - ✅ Skill evidence validation included
 - ✅ Profile quality checks applied
-- ✅ Duplicate candidate penalties improve ranking diversity
+- ✅ Near-duplicate profile suppression
+- ✅ Explainable candidate recommendations
 
 ---
 
@@ -203,8 +216,8 @@ evaluation_report.md
 | Data Processing | Polars, NumPy |
 | Retrieval | Scikit-Learn (TF-IDF) |
 | Semantic Search | Sentence Transformers |
-| Reranking | Cross-Encoder (MS MARCO MiniLM) |
-| Interface | Streamlit |
+| Reranking | MS MARCO Cross-Encoder |
+| Dashboard | Streamlit |
 | Version Control | Git & GitHub |
 
 ---
@@ -213,25 +226,27 @@ evaluation_report.md
 
 ### 📄 submission.csv
 
-Final ranked candidate shortlist.
+Final ranked candidate shortlist with scores and recruiter-facing reasoning.
 
 ### 📈 evaluation_report.md
 
-Detailed evaluation metrics, ranking analysis, and validation statistics.
+Detailed evaluation metrics, ranking analysis, feature importance, validation checks, and runtime statistics.
 
 ---
 
 ## 🏆 Hackathon Highlights
 
 - 🚀 Ranked 100,000 candidate profiles
-- ⚡ Completed ranking in ~31.5 seconds
+- ⚡ Completed ranking in ~31.2 seconds
 - 🤖 Multi-stage AI-powered retrieval pipeline
 - 💡 Explainable candidate recommendations
 - 💻 Fully CPU-based execution
 - 🔒 No external API dependencies
 
 ---
-👨‍💻 Author
-Aaditya Sattawan
----
+
+## 👨‍💻 Author
+
+**Aaditya Sattawan**
+
 GitHub: https://github.com/Tiku57
